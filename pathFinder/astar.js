@@ -10,12 +10,12 @@ var percentWalls = 0.2;
 var lastUpdated = null;
 var finished = false;
 
-var backgroundColor = "#000000"
+var backgroundColor = "#ffffff"
 var blankColor = "#ffffff";
 var wallColor = "#000000";
-var openColor = "#ffff00";
-var closedColor = "#ff00ff";
-var pathColor = "#00ffff";
+var openColor = "#00ff00";
+var closedColor = "#ff0000";
+var pathColor = "#0000ff";
 
 class Cell {
 	constructor(x,y) {
@@ -26,17 +26,22 @@ class Cell {
 		var width = canvas.width/cols;
 		var height = canvas.height/rows;
 		// rect
+		ctx.fillStyle = color;
+		ctx.fillRect(this.x*width,this.y*height,width,height);
+		ctx.strokeStyle = color;
+		ctx.lineWidth = "1";
+		ctx.strokeRect(this.x*width,this.y*height,width,height);
+		// rect border
 		//ctx.fillStyle = color;
 		//ctx.fillRect(this.x*width,this.y*height,width,height);
-		// rect border
 		//ctx.strokeStyle = "#000000";
 		//ctx.lineWidth = "1";
 		//ctx.strokeRect(this.x*width,this.y*height,width,height);
-
-		ctx.fillStyle = color;
-		ctx.beginPath();
-		ctx.arc(this.x*width+width/2,this.y*height+width/2, width/3, 0, 2 * Math.PI);
-		ctx.fill();
+		// circle
+		//ctx.fillStyle = color;
+		//ctx.beginPath();
+		//ctx.arc(this.x*width+width/2,this.y*height+width/2, width/3, 0, 2 * Math.PI);
+		//ctx.fill();
 	}
 }
 

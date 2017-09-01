@@ -4,8 +4,8 @@ var cols = 30;
 var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
 var percentWalls = 0.3;
-var epsilon = 1;
-var diagOn = false;
+var epsilon = 2;
+var diagOn = true;
 var includeHeuristic = true;
 
 var grid = [];
@@ -15,6 +15,7 @@ var oldCurrent = null;
 var current = null;
 var finished = false;
 var impossible = false;
+var heuristicPower = diagOn ? 2 : 1;
 
 var backgroundColor = "#ffffff"
 var blankColor = "#ffffff";
@@ -117,11 +118,11 @@ function setup() {
 	openSet.push(start);
 
 	start.g=0;
-	start.f=heuristic(start,end);
+	start.f=heuristic(start,end,heuristicPower);
 }
 
-function heuristic(c1, c2) {
-	return Math.abs(c1.x-c2.x)+Math.abs(c1.y-c2.y);
+function heuristic(c1, c2, power) {
+	return Math.pow(Math.pow(Math.abs(c1.x-c2.x),power)+Math.pow(Math.abs(c1.y-c2.y),power),1.0/power);
 }
 
 function aStarStep() {
@@ -151,13 +152,13 @@ function aStarStep() {
 					openSet.splice(0,0,n);
 				}
 				if (n.condition == 1) {
-					var possG = current.g+heuristic(n,current);
+					var possG = current.g+heuristic(n,current,heuristicPower);
 					if (possG < n.g) {
 						n.cameFrom = current;
 						n.g = possG;
 						n.f = possG;
 						if (includeHeuristic) {
-							n.f+=epsilon*heuristic(n,end);
+							n.f+=epsilon*heuristic(n,end,heuristicPower);
 						}
 					}
 				}

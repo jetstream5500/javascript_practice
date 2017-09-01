@@ -6,7 +6,7 @@ var end = {x:cols-1,y:rows-1}
 var grid = [];
 var openSet = [];
 var closedSet = [];
-var percentWalls = 0.35;
+var percentWalls = 0.2;
 var lastUpdated = null;
 var finished = false;
 
@@ -64,42 +64,6 @@ class Wall extends Cell {
 		super(x,y);
 	}
 }
-/*function Cell(x,y) {
-	this.x = x;
-	this.y = y;
-	this.f = 0;
-	this.g = 0;
-	this.h = 0;
-	this.cameFrom = null;
-	this.condition = 0;
-
-	this.show = function(color) {
-		var width = canvas.width/cols;
-		var height = canvas.height/rows;
-		ctx.fillStyle = color;
-		ctx.fillRect(this.x*width,this.y*height,width,height);
-		ctx.strokeStyle = "#000";
-		ctx.lineWidth = "1";
-		ctx.strokeRect(this.x*width,this.y*height,width,height);
-	}
-
-	this.getNeighbors = function() {
-		var neighbors = [];
-		if (this.x > 0) {
-			neighbors.push(grid[this.y][this.x-1]);
-		}
-		if (this.x < rows-1) {
-			neighbors.push(grid[this.y][this.x+1]);
-		}
-		if (this.y > 0) {
-			neighbors.push(grid[this.y-1][this.x]);
-		}
-		if (this.y < rows-1) {
-			neighbors.push(grid[this.y+1][this.x]);
-		}
-		return neighbors;
-	}
-}*/
 
 function setup() {
 	for (var y = 0; y<rows; y++) {

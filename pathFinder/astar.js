@@ -1,6 +1,6 @@
 // A*
-var rows = 10;
-var cols = 10;
+var rows = 100;
+var cols = 100;
 var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
 var grid = [];
@@ -11,6 +11,7 @@ var oldCurrent = null;
 var current = null;
 var finished = false;
 var impossible = false;
+var epsilon = 5;
 
 var backgroundColor = "#ffffff"
 var blankColor = "#ffffff";
@@ -138,7 +139,7 @@ function aStarStep() {
 					if (possG < n.g) {
 						n.cameFrom = current;
 						n.g = possG;
-						n.f = possG+heuristic(n,end);
+						n.f = possG+epsilon*heuristic(n,end);
 					}
 				}
 			}

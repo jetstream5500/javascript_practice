@@ -3,8 +3,9 @@ var rows = 100;
 var cols = 100;
 var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
-var percentWalls = 0.3;
-var epsilon = 3;
+var percentWalls = 0;
+var epsilon = 1;
+var diagOn = true;
 
 var grid = [];
 var openSet = [];
@@ -71,6 +72,20 @@ class Node extends Cell {
 		}
 		if (this.y < rows-1 && !(grid[this.y+1][this.x] instanceof Wall)) {
 			neighbors.push(grid[this.y+1][this.x]);
+		}
+		if (diagOn) {
+			if (this.y > 0 && this.x > 0 && !(grid[this.y-1][this.x-1] instanceof Wall)) {
+				neighbors.push(grid[this.y-1][this.x-1]);
+			}
+			if (this.y > 0 && this.x < cols-1 && !(grid[this.y-1][this.x+1] instanceof Wall)) {
+				neighbors.push(grid[this.y-1][this.x+1]);
+			}
+			if (this.y < rows-1 && this.x > 0 && !(grid[this.y+1][this.x-1] instanceof Wall)) {
+				neighbors.push(grid[this.y+1][this.x-1]);
+			}
+			if (this.y < rows-1 && this.x < cols-1 && !(grid[this.y+1][this.x+1] instanceof Wall)) {
+				neighbors.push(grid[this.y+1][this.x+1]);
+			}
 		}
 		return neighbors;
 	}

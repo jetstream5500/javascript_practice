@@ -1,0 +1,14 @@
+body {
+	margin:0px;
+}
+
+.button {
+	position:fixed;
+	top:20px;
+	right:20px;
+}
+
+#canvas {
+	border: 1px solid black;
+	box-sizing: border-box;
+}

@@ -1,11 +1,12 @@
 // A*
-var rows = 100;
-var cols = 100;
+var rows = 30;
+var cols = 30;
 var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
-var percentWalls = 0;
+var percentWalls = 0.3;
 var epsilon = 1;
 var diagOn = true;
+var includeHeuristic = false;
 
 var grid = [];
 var openSet = [];
@@ -53,9 +54,8 @@ class Cell {
 class Node extends Cell {
 	constructor(x,y) {
 		super(x,y);
-		this.f = 10000;
-		this.g = 10000;
-		this.h = 10000;
+		this.f = Infinity;
+		this.g = Infinity;
 		this.cameFrom = null;
 		this.condition = 0;
 	}
@@ -155,7 +155,10 @@ function aStarStep() {
 					if (possG < n.g) {
 						n.cameFrom = current;
 						n.g = possG;
-						n.f = possG+epsilon*heuristic(n,end);
+						n.f = possG;
+						if (includeHeuristic) {
+							n.f+=epsilon*heuristic(n,end);
+						}
 					}
 				}
 			}

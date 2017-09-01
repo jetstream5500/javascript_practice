@@ -10,11 +10,12 @@ var percentWalls = 0.2;
 var lastUpdated = null;
 var finished = false;
 
+var backgroundColor = "#000000"
 var blankColor = "#ffffff";
 var wallColor = "#000000";
-var openColor = "#00ff00";
-var closedColor = "#ff0000";
-var pathColor = "#0000ff";
+var openColor = "#ffff00";
+var closedColor = "#ff00ff";
+var pathColor = "#00ffff";
 
 class Cell {
 	constructor(x,y) {
@@ -24,11 +25,18 @@ class Cell {
 	show(color) {
 		var width = canvas.width/cols;
 		var height = canvas.height/rows;
-		ctx.fillStyle = color;
-		ctx.fillRect(this.x*width,this.y*height,width,height);
+		// rect
+		//ctx.fillStyle = color;
+		//ctx.fillRect(this.x*width,this.y*height,width,height);
+		// rect border
 		//ctx.strokeStyle = "#000000";
 		//ctx.lineWidth = "1";
 		//ctx.strokeRect(this.x*width,this.y*height,width,height);
+
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.arc(this.x*width+width/2,this.y*height+width/2, width/3, 0, 2 * Math.PI);
+		ctx.fill();
 	}
 }
 
@@ -136,7 +144,7 @@ function aStarStep() {
 }
 
 function draw() {
-	ctx.fillStyle = "#FFFFFF";
+	ctx.fillStyle = backgroundColor;
 	ctx.fillRect(0,0,canvas.width,canvas.height);
 	for (var y = 0; y<rows; y++) {
 		for (var x = 0; x<cols; x++) {

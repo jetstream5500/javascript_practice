@@ -5,8 +5,8 @@ var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
 var percentWalls = 0.3;
 var epsilon = 1;
-var diagOn = true;
-var includeHeuristic = false;
+var diagOn = false;
+var includeHeuristic = true;
 
 var grid = [];
 var openSet = [];

@@ -3,15 +3,16 @@ var rows = 100;
 var cols = 100;
 var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
+var percentWalls = 0.3;
+var epsilon = 3;
+
 var grid = [];
 var openSet = [];
 var closedSet = [];
-var percentWalls = 0.3;
 var oldCurrent = null;
 var current = null;
 var finished = false;
 var impossible = false;
-var epsilon = 5;
 
 var backgroundColor = "#ffffff"
 var blankColor = "#ffffff";
@@ -32,7 +33,7 @@ class Cell {
 		ctx.fillStyle = color;
 		ctx.fillRect(this.x*width,this.y*height,width,height);
 		//ctx.strokeStyle = "#000000";
-		//ctx.lineWidth = "0.5";
+		//ctx.lineWidth = "0";
 		//ctx.strokeRect(this.x*width,this.y*height,width,height);
 		// rect border
 		//ctx.fillStyle = color;
@@ -183,6 +184,7 @@ function draw() {
 	if (finished || impossible) {
 		// stop looper
 		stopIterate();
+		initialDraw();
 	} else {
 		// update neighbors
 		var neighbors = current.getNeighbors();

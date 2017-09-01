@@ -1,14 +1,16 @@
 // A*
-var rows = 50;
-var cols = 50;
+var rows = 10;
+var cols = 10;
 var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
 var grid = [];
 var openSet = [];
 var closedSet = [];
-var percentWalls = 0.2;
-var lastUpdated = null;
+var percentWalls = 0.3;
+var oldCurrent = null;
+var current = null;
 var finished = false;
+var impossible = false;
 
 var backgroundColor = "#ffffff"
 var blankColor = "#ffffff";
@@ -28,9 +30,9 @@ class Cell {
 		// rect
 		ctx.fillStyle = color;
 		ctx.fillRect(this.x*width,this.y*height,width,height);
-		ctx.strokeStyle = color;
-		ctx.lineWidth = "1";
-		ctx.strokeRect(this.x*width,this.y*height,width,height);
+		//ctx.strokeStyle = "#000000";
+		//ctx.lineWidth = "0.5";
+		//ctx.strokeRect(this.x*width,this.y*height,width,height);
 		// rect border
 		//ctx.fillStyle = color;
 		//ctx.fillRect(this.x*width,this.y*height,width,height);
@@ -56,16 +58,16 @@ class Node extends Cell {
 	}
 	getNeighbors() {
 		var neighbors = [];
-		if (this.x > 0) {
+		if (this.x > 0 && !(grid[this.y][this.x-1] instanceof Wall)) {
 			neighbors.push(grid[this.y][this.x-1]);
 		}
-		if (this.x < rows-1) {
+		if (this.x < cols-1 && !(grid[this.y][this.x+1] instanceof Wall)) {
 			neighbors.push(grid[this.y][this.x+1]);
 		}
-		if (this.y > 0) {
+		if (this.y > 0 && !(grid[this.y-1][this.x] instanceof Wall)) {
 			neighbors.push(grid[this.y-1][this.x]);
 		}
-		if (this.y < rows-1) {
+		if (this.y < rows-1 && !(grid[this.y+1][this.x] instanceof Wall)) {
 			neighbors.push(grid[this.y+1][this.x]);
 		}
 		return neighbors;
@@ -116,7 +118,6 @@ function aStarStep() {
 				current = node;
 			}
 		}
-		lastUpdated=current;
 		if (current == end) {
 			finished=true;
 		} else {
@@ -143,12 +144,12 @@ function aStarStep() {
 			}
 		}
 	} else {
-		finished=true;
+		impossible=true;
 	}
 	//console.log(grid);
 }
 
-function draw() {
+function initialDraw() {
 	ctx.fillStyle = backgroundColor;
 	ctx.fillRect(0,0,canvas.width,canvas.height);
 	for (var y = 0; y<rows; y++) {
@@ -166,14 +167,42 @@ function draw() {
 			}
 		}
 	}
-	if (lastUpdated!=null) {
-		while (lastUpdated.cameFrom!=null) {
-			lastUpdated.show(pathColor);
-			lastUpdated = lastUpdated.cameFrom;
+}
+
+function draw() {
+	// delete old path
+	if (oldCurrent!=null) {
+		var oldCurrentCopy = oldCurrent;
+		while (oldCurrentCopy.cameFrom!=null) {
+			oldCurrentCopy.show(closedColor);
+			oldCurrentCopy = oldCurrentCopy.cameFrom;
 		}
-		lastUpdated.show(pathColor);
+		oldCurrentCopy.show(closedColor);
 	}
-	if (finished) {
+	if (finished || impossible) {
+		// stop looper
 		stopIterate();
+	} else {
+		// update neighbors
+		var neighbors = current.getNeighbors();
+		for (var i = 0; i<neighbors.length; i++) {
+			if (neighbors[i].condition==1) {
+				neighbors[i].show(openColor);
+			} else {
+				neighbors[i].show(closedColor);
+			}
+		}
+		current.show(closedColor);
+	}
+	if (!impossible) {
+		// draw new path
+		var currentCopy = current;
+		while (currentCopy.cameFrom!=null) {
+			currentCopy.show(pathColor);
+			currentCopy = currentCopy.cameFrom;
+		}
+		currentCopy.show(pathColor);
+
+		oldCurrent=current;
 	}
 }

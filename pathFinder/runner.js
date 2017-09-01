@@ -11,8 +11,8 @@ var animationFrameID;
 
 window.onload = function() {
 	window.addEventListener('resize', resizeCanvas, false);
-	resizeCanvas();
 	setup();
+	resizeCanvas();
 };
 
 function resizeCanvas() {
@@ -23,6 +23,7 @@ function resizeCanvas() {
 	canvas.style.width = size+"px";
 	canvas.style.height = size+"px";
 
+	initialDraw();
 	iterate();
 }
 
@@ -33,8 +34,8 @@ function iterate() {
 	delta = now-then;
 	if (delta > interval) {
 		then = now - (delta % interval);
-		draw();
 		aStarStep();
+		draw();
 	}
 }
 

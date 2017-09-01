@@ -1,9 +1,9 @@
 // A*
-var rows = 30;
-var cols = 30;
+var rows = 500;
+var cols = 500;
 var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
-var percentWalls = 0.3;
+var percentWalls = 0.4;
 var epsilon = 2;
 var diagOn = true;
 var includeHeuristic = true;
@@ -20,9 +20,9 @@ var heuristicPower = diagOn ? 2 : 1;
 var backgroundColor = "#ffffff"
 var blankColor = "#ffffff";
 var wallColor = "#000000";
-var openColor = "#00ff00";
-var closedColor = "#ff0000";
-var pathColor = "#0000ff";
+var openColor = "#ffff00";
+var closedColor = "#00ffff";
+var pathColor = "#ff00ff";
 
 class Cell {
 	constructor(x,y) {
@@ -35,9 +35,6 @@ class Cell {
 		// rect
 		ctx.fillStyle = color;
 		ctx.fillRect(this.x*width,this.y*height,width,height);
-		//ctx.strokeStyle = "#000000";
-		//ctx.lineWidth = "0";
-		//ctx.strokeRect(this.x*width,this.y*height,width,height);
 		// rect border
 		//ctx.fillStyle = color;
 		//ctx.fillRect(this.x*width,this.y*height,width,height);

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--SETUP-->
+		<title>Show Image Dimensions Locally</title>
+		<!--STYLES-->
+		<link href='style.css' rel='stylesheet' type='text/css'>
+
+	</head>
+	<body>
+		<form action='#' onsubmit="return false;">
+	    	<input type='file' id='fileSelect'>
+	    	<input type='button' id='imgLoad' value='Load' onclick='loadImage()'>
+		</form>
+	    <canvas id="canvas"></canvas>
+		<canvas id="bestcanvas"></canvas>
+		<canvas id="test"></canvas>
+		<br>
+		<input type='button' id='start' value='Start' onclick='generate()'>
+		<!--SCRIPTS-->
+		<script src="script.js"></script>
+	</body>
+</html>

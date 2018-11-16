@@ -1,6 +1,6 @@
 // A*
-var rows = 500;
-var cols = 500;
+var rows = 20;
+var cols = 20;
 var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
 var percentWalls = 0.4;

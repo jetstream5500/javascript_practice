@@ -1,10 +1,10 @@
 // A*
-var rows = 20;
-var cols = 20;
+var rows = 100;
+var cols = 100;
 var start = {x:0,y:0};
 var end = {x:cols-1,y:rows-1}
-var percentWalls = 0.4;
-var epsilon = 2;
+var percentWalls = 0.2;
+var epsilon = 1.1;
 var diagOn = true;
 var includeHeuristic = true;
 

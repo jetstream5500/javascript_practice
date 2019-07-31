@@ -12,11 +12,12 @@
 	    	<input type='file' id='fileSelect'>
 	    	<input type='button' id='imgLoad' value='Load' onclick='loadImage()'>
 		</form>
-	    <canvas id="canvas"></canvas>
-		<canvas id="bestcanvas"></canvas>
-		<canvas id="test"></canvas>
+	  <canvas id="image"></canvas>
+		<canvas id="best_painting"></canvas>
+    <canvas id="inspect_painting"></canvas>
 		<br>
-		<input type='button' id='start' value='Start' onclick='generate()'>
+		<input type='button' id='start' value='Start' onclick='setup();iterate()'>
+    <input type='button' id='stop' value='Stop' onclick='stopIterate()'>
 		<!--SCRIPTS-->
 		<script src="script.js"></script>
 	</body>

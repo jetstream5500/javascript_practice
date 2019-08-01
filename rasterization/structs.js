@@ -58,6 +58,13 @@ class Matrix3x3 {
     }
 }
 
+class Mesh {
+    constructor(triangles) {
+        this.triangles = triangles;
+    }
+}
+
+
 class Color {
     constructor(r, g, b) {
         this.r = r;
@@ -76,7 +83,7 @@ class Triangle {
     }
 
     contains(p) {
-        // jank but works
+        // jank but works (?)
         var edge1 = this.b.sub(this.a);
         var edge2 = this.c.sub(this.b);
         var edge3 = this.a.sub(this.c);
@@ -87,23 +94,20 @@ class Triangle {
         var cross2 = edge2.cross(v2);
         var cross3 = edge3.cross(v3);
 
-        if (cross1.x != 0) {
-            return ((cross1.x < 0 && cross2.x < 0 && cross3.x < 0) || (cross1.x > 0 && cross2.x > 0 && cross3.x > 0));
-        } else if (cross1.y != 0) {
-            return ((cross1.y < 0 && cross2.y < 0 && cross3.y < 0) || (cross1.y > 0 && cross2.y > 0 && cross3.y > 0));
-        } else {
-            return ((cross1.z < 0 && cross2.z < 0 && cross3.z < 0) || (cross1.z > 0 && cross2.z > 0 && cross3.z > 0));
-        }
+        //console.log(cross1, cross2, cross3)
 
+        return (((cross1.x >= 0 && cross2.x >= 0 && cross3.x >= 0) || (cross1.x <= 0 && cross2.x <= 0 && cross3.x <= 0)) &&
+                ((cross1.y >= 0 && cross2.y >= 0 && cross3.y >= 0) || (cross1.y <= 0 && cross2.y <= 0 && cross3.y <= 0)) &&
+                ((cross1.z >= 0 && cross2.z >= 0 && cross3.z >= 0) || (cross1.z <= 0 && cross2.z <= 0 && cross3.z <= 0)));
     }
 
-    depth(c, s) {
-        // We are solving A(s.x*d + c.x - p) + B(...) + C(...) = 0
+    depth(s) {
+        // We are solving A(s.x*d - p) + B(...) + C(...) = 0
         // p is just the point a for this
         var edge1 = this.b.sub(this.a);
         var edge2 = this.c.sub(this.a);
         var normal = edge1.cross(edge2);
-        var rhs = normal.x*(this.a.x-c.x) + normal.y*(this.a.y-c.y) + normal.z*(this.a.z-c.z);
+        var rhs = normal.x*(this.a.x) + normal.y*(this.a.y) + normal.z*(this.a.z);
         var lhs = normal.x*s.x + normal.y*s.y + normal.z*s.z;
         return rhs / lhs;
     }
